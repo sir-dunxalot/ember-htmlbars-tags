@@ -10,6 +10,7 @@ export function open(params, hash) {
   var string = '<';
   var tagOptions = {};
   var attributeBindings, classNameBindings, classNames;
+  var configOptions = defaultFor(ENV.HTMLBarsTags, {});
 
   hash = hash.hash;
 
@@ -67,12 +68,10 @@ export function open(params, hash) {
   classNameBindings = tagOptions.classNameBindings;
   classNames = tagOptions.classNames;
 
-  if (ENV.htmlbarsTags) {
-    defaultAttributeBindings = defaultFor(
-      ENV.htmlbarsTags.defaultAttributeBindings,
-      defaultAttributeBindings
-    );
-  }
+  defaultAttributeBindings = defaultFor(
+    configOptions.defaultAttributeBindings,
+    defaultAttributeBindings
+  );
 
   attributeBindings = attributeBindings.concat(defaultAttributeBindings);
 
@@ -115,7 +114,11 @@ export function open(params, hash) {
 
   string += '>';
 
-  return string;
+  if (configOptions.debug) {
+    return string;
+  } else {
+    return new Ember.Handlebars.SafeString(string);
+  }
 }
 
 export default Ember.Handlebars.makeBoundHelper(open);

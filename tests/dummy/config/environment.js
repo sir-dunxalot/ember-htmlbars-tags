@@ -20,6 +20,10 @@ module.exports = function(environment) {
 
     contentSecurityPolicy: {
       'style-src': "'self' 'unsafe-inline'"
+    },
+
+    HTMLBarsTags: {
+      // debug: true
     }
   };
 

@@ -1,8 +1,10 @@
 import defaultFor from 'ember-htmlbars-tags/utils/default-for';
 import Ember from 'ember';
+import ENV from '../config/environment';
 import tags from '../utils/tags';
 
 export function close(params, hash) {
+  var configOptions = defaultFor(ENV.HTMLBarsTags, {});
   var name = params.camelize();
   var properties = tags[name];
   var string = '</';
@@ -14,7 +16,11 @@ export function close(params, hash) {
 
   string += properties.tagName + '>';
 
-  return string;
+  if (configOptions.debug) {
+    return string;
+  } else {
+    return Ember.Handlebars.SafeString(string);
+  }
 }
 
-export default Ember.Handlebars.makeBoundHelper(close);
+export default new Ember.Handlebars.makeBoundHelper(close);
