@@ -7,16 +7,12 @@ export function close(params, hash) {
   var properties = tags[name];
   var string = '</';
 
-  hash = hash.hash;
-
   Ember.assert(
     'No tag found with the name ' + name,
     properties
   );
 
-  string += properties.tagName;
-
-  string += '>';
+  string += properties.tagName + '>';
 
   return string;
 }

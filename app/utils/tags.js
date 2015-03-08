@@ -1,7 +1,7 @@
 export default {
   pageContent: {
-    attributeBindings: [],
-    classNames: [],
+    attributeBindings: ['novalidate'],
+    classNames: ['farts'],
     classNameBindings: [],
     tagName: 'div',
   }

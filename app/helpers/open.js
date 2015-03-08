@@ -1,8 +1,10 @@
 import defaultFor from 'ember-htmlbars-tags/utils/default-for';
 import Ember from 'ember';
+import ENV from '../config/environment';
 import tags from '../utils/tags';
 
 export function open(params, hash) {
+  var defaultAttributeBindings = ['class', 'role', 'style'];
   var name = params.camelize();
   var properties = tags[name];
   var string = '<';
@@ -16,6 +18,10 @@ export function open(params, hash) {
     properties
   );
 
+  if (properties.customOpenString) {
+    return properties.customOpenString(params, hash.hash);
+  }
+
   /* Move the properties the the tagOptions object */
 
   for (var property in properties) {
@@ -24,21 +30,39 @@ export function open(params, hash) {
 
   /* Merge in the bindings on the helper in the template */
 
-  for (var property in hash) {
-    var hashProperties = hash[property].split(' ');
+  [
+    'attributeBindings',
+    'classNameBindings',
+    'classNames'
+  ].forEach(function(property) {
+    var value = hash[property];
+    var hashProperties;
 
-    if (!tagOptions[property]) {
-      tagOptions[property] = hashProperties;
-    } else {
-      tagOptions[property] = tagOptions[property].concat(hashProperties);
+    if (value) {
+      hashProperties = hash[property].split(' ');
+
+      if (!tagOptions[property]) {
+        tagOptions[property] = hashProperties;
+      } else {
+        tagOptions[property] = tagOptions[property].concat(hashProperties);
+      }
     }
-  }
+  });
 
   string += properties.tagName;
 
   attributeBindings = tagOptions.attributeBindings;
   classNameBindings = tagOptions.classNameBindings;
   classNames = tagOptions.classNames;
+
+  if (ENV.htmlbarsTags) {
+    defaultAttributeBindings = defaultFor(
+      ENV.htmlbarsTags.defaultAttributeBindings,
+      defaultAttributeBindings
+    );
+  }
+
+  attributeBindings = attributeBindings.concat(defaultAttributeBindings);
 
   if (classNameBindings) {
     classNameBindings.forEach(function(binding) {
@@ -57,21 +81,23 @@ export function open(params, hash) {
     });
   }
 
+  console.log(attributeBindings);
+
   if (attributeBindings) {
     attributeBindings.forEach(function(binding) {
       var value = hash[binding];
 
       if (value) {
-        string += ' ' + binding + '=' + value;
+        string += ' ' + binding + '="' + value + '"';
       }
     });
   }
 
-  if (classNames) {
+  if (classNames.length) {
     string += ' class="';
 
     classNames.forEach(function(className) {
-      string += ' ' + className;
+      string += className + ' ';
     });
 
     string += '"';
