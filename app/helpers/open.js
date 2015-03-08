@@ -18,8 +18,20 @@ export function open(params, hash) {
     properties
   );
 
+  Ember.assert(
+    'No tagName specified for the ' + name + ' tag',
+    properties.tagName
+  );
+
   if (properties.customOpenString) {
-    return properties.customOpenString(params, hash.hash);
+    Ember.warn(
+      'If you specify a customOpenString method for ' + name + ' tag, other tag properties will not take affect',
+      !properties.attributeBindings ||
+      !properties.classNames ||
+      !properties.classNameBindings
+    );
+
+    return properties.customOpenString(properties.tagName, hash.hash);
   }
 
   /* Move the properties the the tagOptions object */
@@ -80,8 +92,6 @@ export function open(params, hash) {
       }
     });
   }
-
-  console.log(attributeBindings);
 
   if (attributeBindings) {
     attributeBindings.forEach(function(binding) {

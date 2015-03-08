@@ -3,6 +3,6 @@ export default {
     attributeBindings: ['novalidate'],
     classNames: ['farts'],
     classNameBindings: [],
-    tagName: 'div',
+    tagName: 'div'
   }
 };
