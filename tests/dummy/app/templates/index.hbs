@@ -1,5 +1,20 @@
 {{#tag 'page-content'}}
-  {{view.constructor}}
-  {{controller.constructor}}
-  <button {{action 'someTest' target='view'}}></button>
+  <dl data-test="tag_content">
+    <dt>View</dt>
+    <dd data-test="view_constructor">
+      {{view.constructor}}
+    </dd>
+    <dt>Controller</dt>
+    <dd data-test="controller_constructor">
+      {{controller.constructor}}
+    </dd>
+    <dt>Test Property</dt>
+    <dd data-test="view_property">
+      {{view.testProperty}}
+    </dd>
+  </dl>
+
+  <button {{action 'actionOnView' target='view'}} data-test="view_action_button">
+    Click me to see an alert
+  </button>
 {{/tag}}

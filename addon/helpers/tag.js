@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 var TagVirtualView = Ember._MetamorphView.extend();
 
-function wrapTemplate(view, params, hash, options, env) {
+export function tag(view, params, hash, options/*, env */) {
   var name = params[0];
   var layoutName = 'tags/' + name;
 
@@ -23,6 +23,6 @@ function wrapTemplate(view, params, hash, options, env) {
 export default {
   isHTMLBars: true,
   helperFunction: function(params, hash, options, env) {
-    return wrapTemplate(this, params, hash, options, env);
+    return tag(this, params, hash, options, env);
   }
-}
+};

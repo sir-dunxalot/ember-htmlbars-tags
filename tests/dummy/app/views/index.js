@@ -1,11 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.View.extend({
-  hello: 'ok',
+  testProperty: 'Shiver me tEmbers!',
+  testTagClass: 'tag',
 
   actions: {
-    someTest: function() {
-      console.log('farts');
+    actionOnView: function() {
+      this.testAction();
     }
+  },
+
+  testAction: function() {
+    window.alert('The action fired on the view!');
   }
+
 });

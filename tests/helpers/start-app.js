@@ -3,6 +3,12 @@ import Application from '../../app';
 import Router from '../../router';
 import config from '../../config/environment';
 
+/* Custom helpers */
+
+import asyncClick from './async/async-click';
+import assertPresence from './sync/assert-presence';
+import inspect from './sync/inspect';
+
 export default function startApp(attrs) {
   var application;
 
