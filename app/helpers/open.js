@@ -114,6 +114,8 @@ export function open(params, hash) {
 
   string += '>';
 
+  console.log(Ember.Handlebars.SafeString);
+
   if (configOptions.debug) {
     return string;
   } else {
