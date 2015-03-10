@@ -1,4 +1,4 @@
-# Ember HTMLBars Tags
+# Ember HTMLBars Tags [![Build Status](https://travis-ci.org/sir-dunxalot/ember-htmlbars-tags.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-htmlbars-tags)
 
 Ember HTMLBars Tags (`ember-htmlbars-tags`) is an Ember addon that improves the maintainability of your commonly used HTML fragments without adding unnecessary view scope to your templates.
 
